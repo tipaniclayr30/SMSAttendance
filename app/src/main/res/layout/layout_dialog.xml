@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/txtID"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="27dp"
+        android:ems="10"
+        android:hint="ID Number"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/txtName"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtID"
+        android:layout_below="@+id/txtID"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtParentName"
+        android:layout_below="@+id/txtName"
+        android:layout_marginTop="42dp"
+        android:text="Parents Information"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/txtParentName"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtName"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="Guardian/Parent Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/txtCellNum"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtParentName"
+        android:layout_below="@+id/txtParentName"
+        android:ems="10"
+        android:hint="Contact #"
+        android:inputType="textPersonName" />
+</RelativeLayout>
