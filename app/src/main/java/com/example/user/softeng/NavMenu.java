@@ -24,12 +24,13 @@ public class NavMenu extends AppCompatActivity
         setContentView(R.layout.activity_nav_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//NOT YET SOLVE
+
+//NOT YET SOLVE mao natong eset ang name sa naglogin ang pangalan sa textview kay user......
         Bundle b = getIntent().getExtras();
         String username = b.getString("username");
 
         TextView user= findViewById(R.id.user);
-         user.setText("JJ");
+         user.setText(username);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addclass);
         fab.setOnClickListener(new View.OnClickListener() {
