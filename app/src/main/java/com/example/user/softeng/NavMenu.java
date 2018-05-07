@@ -29,11 +29,11 @@ public class NavMenu extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 //NOT YET SOLVE mao natong eset ang name sa naglogin ang pangalan sa textview kay user......
-        Bundle b = getIntent().getExtras();
+  /*      Bundle b = getIntent().getExtras();
         String username = b.getString("username");
 
         TextView user= findViewById(R.id.user);
-         user.setText(username);
+         user.setText(username);*/
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addclass);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +94,9 @@ public class NavMenu extends AppCompatActivity
         if (id == R.id.nav_home) {
            fragment= new FragmentHomeClass();
         } else if (id == R.id.nav_editclass) {
-
+            fragment= new FragmentEditClass();
+        }else if (id == R.id.nav_report) {
+            fragment= new FragmentReport();
         } else if (id == R.id.nav_logout) {
 
         }
