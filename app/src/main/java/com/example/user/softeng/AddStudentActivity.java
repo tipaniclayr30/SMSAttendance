@@ -12,7 +12,7 @@ public class AddStudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_student);
     }
-
+//hdhdghdg
     public void addStudent(View view){
         openDialog();
     }
