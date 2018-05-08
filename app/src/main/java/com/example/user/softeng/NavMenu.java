@@ -19,7 +19,7 @@ public class NavMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Fragment fragment= null;
-    //TextView user = findViewById(R.id.user);
+    TextView user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +33,8 @@ public class NavMenu extends AppCompatActivity
         Bundle b = getIntent().getExtras();
         String username = b.getString("username");
 
-        TextView userName = findViewById(R.id.user);
-        userName.setText(username);
+        user = findViewById(R.id.user);
+        user.setText(username);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addclass);
         fab.setOnClickListener(new View.OnClickListener() {

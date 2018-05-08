@@ -45,8 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
             register.isEnabled();
 
             if (password.length()==0 || password.length()<4){
-                password.setError("above 4 alphanumeric characters");
-
+                password.setError("Requires above 4 characters");
             }
             else{
                 password.setError(null);
