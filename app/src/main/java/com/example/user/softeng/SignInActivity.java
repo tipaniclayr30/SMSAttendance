@@ -16,11 +16,13 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         db = new DatabaseAttendance(this);
+
+        getSupportActionBar().setTitle("Attendance Monitoring with SMS");
     }
 
-    public void add(View view){
-        Intent addUser= new Intent(this, SignUpActivity.class);
-        startActivity(addUser);
+    public void signUp(View view){
+        Intent signup= new Intent(this, SignUpActivity.class);
+        startActivity(signup);
     }
 
 
@@ -32,19 +34,19 @@ public class SignInActivity extends AppCompatActivity {
 
         Boolean a = db.emailpass(username.getText().toString(),password.getText().toString());
 
-         if(a==true){
-
-            Toast.makeText(getApplicationContext(),"Successfully Login",Toast.LENGTH_SHORT).show();
+        if(a==true){
 
             Intent home= new Intent(this, NavMenu.class);
-            Bundle b = new Bundle();
-            b.putString("username",username.getText().toString());
-            home.putExtras(b);
+            home.putExtra("username", username.getText().toString());
             startActivity(home);
 
+            Toast.makeText(getApplicationContext(),"Successfully Login",Toast.LENGTH_SHORT).show();
+            username.setText(""); password.setText("");
 
         }else{
             Toast.makeText(getApplicationContext(),"Wrong Email or Password",Toast.LENGTH_SHORT).show();
+            username.setText(username.getText().toString());
+            password.setText(password.getText().toString());
         }
 
 
