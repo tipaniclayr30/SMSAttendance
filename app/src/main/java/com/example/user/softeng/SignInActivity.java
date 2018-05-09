@@ -31,24 +31,29 @@ public class SignInActivity extends AppCompatActivity {
         EditText username = findViewById(R.id.s_username);
         EditText password = findViewById(R.id.s_pass);
 
-
-        Boolean a = db.emailpass(username.getText().toString(),password.getText().toString());
-
-        if(a==true){
-
-            Intent home= new Intent(this, NavMenu.class);
-            home.putExtra("username", username.getText().toString());
-            startActivity(home);
-
-            Toast.makeText(getApplicationContext(),"Successfully Login",Toast.LENGTH_SHORT).show();
-            username.setText(""); password.setText("");
-
-        }else{
-            Toast.makeText(getApplicationContext(),"Wrong Email or Password",Toast.LENGTH_SHORT).show();
-            username.setText(username.getText().toString());
-            password.setText(password.getText().toString());
+        if (username.getText().toString().isEmpty()||password.getText().toString().isEmpty()){
+            Toast.makeText(getApplicationContext(),"Fill in all fields",Toast.LENGTH_SHORT).show();
         }
+        else{
 
+            Boolean a = db.emailpass(username.getText().toString(),password.getText().toString());
+
+            if(a==true){
+
+                Toast.makeText(getApplicationContext(),"Successfully Login",Toast.LENGTH_SHORT).show();
+                Intent home= new Intent(this, NavMenu.class);
+                home.putExtra("username", username.getText().toString().trim());
+                startActivity(home);
+
+                username.setText(""); password.setText("");
+
+            }else{
+                Toast.makeText(getApplicationContext(),"Wrong Email or Password",Toast.LENGTH_SHORT).show();
+                username.setText(username.getText().toString());
+                password.setText(password.getText().toString());
+            }
+
+        }
 
     }
 
