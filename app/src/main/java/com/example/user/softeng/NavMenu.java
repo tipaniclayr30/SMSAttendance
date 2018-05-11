@@ -14,6 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class NavMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,8 +31,9 @@ public class NavMenu extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//NOT YET SOLVE mao natong eset ang name sa naglogin ang pangalan sa textview kay user......
-  /*      Bundle b = getIntent().getExtras();
+       
+/*NOT YET SOLVE mao natong eset ang name sa naglogin ang pangalan sa textview kay user......
+        Bundle b = getIntent().getExtras();
         String username = b.getString("username");
 
         TextView user= findViewById(R.id.user);

@@ -12,15 +12,24 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class AddClassDialog  extends AppCompatDialogFragment {
     private EditText editTextName;
     private EditText editTextRoom;
     private EditText editTextTime,editTextDays;
+    int drop,days;
+
+    DatabaseAttendance db;
+    ArrayList<Class> c;
 
     private Switch dropswitch;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+     db = new DatabaseAttendance(getActivity());
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -39,12 +48,14 @@ public class AddClassDialog  extends AppCompatDialogFragment {
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                      addclass();
 
                     }
                 });
 
         editTextName = view.findViewById(R.id.editTextName);
         editTextRoom = view.findViewById(R.id.editTextRoom);
+        editTextTime = view.findViewById(R.id.editTextTime);
         editTextDays = view.findViewById(R.id.editTextDays);
         dropswitch = view.findViewById(R.id.dropswitch);
         editTextDays.setEnabled(false);
@@ -53,15 +64,39 @@ public class AddClassDialog  extends AppCompatDialogFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     editTextDays.setEnabled(true);
+                    drop =1;
                 } else {
                     editTextDays.setEnabled(false);
                     editTextDays.setText("");
+                    drop = 2;
                 }
+
             }
         });
 
         return builder.create();
     }
 
+
+    public void addclass(){
+
+        if(drop==0){
+            days = 0;
+        }else{
+            days = Integer.parseInt(editTextDays.getText().toString());
+        }
+
+        db.addClass(editTextName.getText().toString(),editTextRoom.getText().toString(), editTextTime.getText().toString(),drop,days);
+
+
+        editTextName.setText("");
+        editTextRoom.setText("");
+        editTextTime.setText("");
+        editTextDays.setText("");
+        dropswitch.setChecked(false);
+        editTextDays.setText("");
+        editTextDays.setEnabled(false);
+
+    }
 
 }

@@ -13,8 +13,9 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
 
 
     public DatabaseAttendance(Context context){
-        super(context,"Attendance.db",null, 1);
+        super(context,"Attendance2.db",null, 1);
     }
+
 
 
 
@@ -29,15 +30,17 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
         db.insert("USER", null,param);
     }
 
-    public void addStudent (int id, String name, String username, String password){
+    public void addClass (String subject, String code, String time,int drop,int numdays){
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues param = new ContentValues();
-        param.put("ID", id);
-        param.put("NAME", name);
-        param.put("USERNAME", username);
-        param.put("PASSWORD", password);
-        db.insert("USER", null,param);
+        //Wala pay user
+        param.put("SUBJECT", subject);
+        param.put("CODE", code);
+        param.put("TIME", time);
+        param.put("DRP", drop);
+        param.put("NUMDAYS", numdays);
+        db.insert("COURSE", null,param);
     }
 
 
@@ -59,6 +62,50 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
             c.moveToNext();
         }
         return res;
+    }
+
+    //WALA PA NA SET NA KUNG UNSAY TEACHER MAO TONG MGA KLASEHA ANG MUGAWAS LANG
+    public ArrayList<Class> selectClass(){
+        ArrayList<Class> res = new ArrayList<Class>();
+        SQLiteDatabase db =getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM COURSE",null);
+
+        c.moveToFirst();
+        while (c.isAfterLast() == false){
+
+            //int id =c.getInt(c.getColumnIndex("ID"));
+            String subject = c.getString(c.getColumnIndex("SUBJECT"));
+            String code = c.getString(c.getColumnIndex("CODE"));
+            String time = c.getString(c.getColumnIndex("TIME"));
+            int d =c.getInt(c.getColumnIndex("DRP"));
+            int n =c.getInt(c.getColumnIndex("NUMDAYS"));
+
+
+            Class cl = new Class(subject,code,time,d,n);
+            res.add(cl);
+            c.moveToNext();
+        }
+        return res;
+    }
+//WALA PA NA SET NA KUNG UNSAY TEACHER MAO TONG MGA KLASEHA
+    public ArrayList<Integer> selectUpdateclass(){
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        SQLiteDatabase db =getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT ID FROM COURSE",null);
+
+        c.moveToFirst();
+        while (c.isAfterLast() == false){
+
+            int id =c.getInt(c.getColumnIndex("ID"));
+
+            res.add(id);
+            c.moveToNext();
+        }
+        return res;
+    }
+    public void updateClass(String subject, String code, String time,int drop,int numdays,int id){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("UPDATE  USER SET SUBJECT=?, CODE=?, TIME=?,DRP="+ drop+ ", NUMDAYS="+ numdays+ " WHERE CODE="+id+"",  new String[]{subject,code,time});
     }
 
     //CHECKING EMAIL
@@ -91,8 +138,8 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        db.execSQL("CREATE TABLE COURSE (ID INTEGER PRIMARY KEY AUTOINCREMENT, USER INTEGER ,SUBJECT TEXT, CODE TEXT, TIME TEXT, DRP INTEGER, NUMDAYS INTEGER)");
         db.execSQL("CREATE TABLE USER (ID INTEGER, NAME TEXT, USERNAME TEXT, PASSWORD TEXT)");
-        db.execSQL("CREATE TABLE CLASS (ID INTEGER, USER INTEGER ,SUBJECT TEXT, CODE TEXT, TIME TEXT, DRP INTEGER, NUMDAYS INTEGER)");
         db.execSQL("CREATE TABLE STUDENT (ID INTEGER, USER INTEGER,CLASS INTEGER,IDNUM INTEGER, NAME TEXT, PARENTNAME  TEXT, NUMBER TEXT)");
         db.execSQL("CREATE TABLE ATTENDANCE ( USER INTEGER, CLASS INTEGER , STUDENT INTEGER , DATE TEXT , REMARK TEXT, STATUS TEXT)");
 
