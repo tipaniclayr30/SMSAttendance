@@ -16,7 +16,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/txtName"
+        android:id="@+id/name"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/txtID"
@@ -30,7 +30,7 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/txtParentName"
-        android:layout_below="@+id/txtName"
+        android:layout_below="@+id/name"
         android:layout_marginTop="42dp"
         android:text="Parents Information"
         android:textColor="@android:color/black"
@@ -40,7 +40,7 @@
         android:id="@+id/txtParentName"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txtName"
+        android:layout_alignStart="@+id/name"
         android:layout_below="@+id/textView2"
         android:layout_marginTop="28dp"
         android:ems="10"

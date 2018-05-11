@@ -16,30 +16,28 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 public class NavMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Fragment fragment= null;
-
+    TextView userT;
+    DrawerLayout drawer;
+    NavigationView navigationView;
+    ActionBarDrawerToggle toggle;
+    FloatingActionButton fab;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_menu);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       
-/*NOT YET SOLVE mao natong eset ang name sa naglogin ang pangalan sa textview kay user......
-        Bundle b = getIntent().getExtras();
-        String username = b.getString("username");
+//NOT YET SOLVE mao natong eset ang name sa naglogin ang pangalan sa textview kay user......
 
-        TextView user= findViewById(R.id.user);
-         user.setText(username);*/
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.addclass);
+        fab = (FloatingActionButton) findViewById(R.id.addclass);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,14 +45,19 @@ public class NavMenu extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
+//        Toast.makeText(getApplicationContext(), "Hmm", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -62,6 +65,7 @@ public class NavMenu extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+
         } else {
             super.onBackPressed();
         }
@@ -71,6 +75,11 @@ public class NavMenu extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.nav_menu, menu);
+        Bundle b = getIntent().getExtras();
+        String username = b.getString("username");
+        Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT).show();
+        userT = findViewById(R.id.userText);
+        userT.setText(username);
         return true;
     }
 
@@ -98,9 +107,7 @@ public class NavMenu extends AppCompatActivity
         if (id == R.id.nav_home) {
            fragment= new FragmentHomeClass();
         } else if (id == R.id.nav_editclass) {
-            fragment= new FragmentEditClass();
-        }else if (id == R.id.nav_report) {
-            fragment= new FragmentReport();
+
         } else if (id == R.id.nav_logout) {
 
         }

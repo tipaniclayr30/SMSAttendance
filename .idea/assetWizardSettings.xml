@@ -18,8 +18,11 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundImage" value="D:\A C A D E M I C S\SOFT ENG\16553e91d5a37d7e7be90050fef68a4c.jpg" />
-                                      <entry key="backgroundLayerName" value="ic_launcher_bg1" />
+                                      <entry key="backgroundImage" value="C:\Users\Jenny Rose\Documents\images\logo(FInal).png" />
+                                      <entry key="backgroundLayerName" value="ic_launcher_bg1_logo" />
+                                      <entry key="foregroundImage" value="C:\Users\Jenny Rose\Documents\images\logo(FInal).png" />
+                                      <entry key="foregroundLayerName" value="ic_launcher_foreground" />
+                                      <entry key="outputName" value="ic_launcher_logo" />
                                     </map>
                                   </option>
                                 </PersistentState>

@@ -16,11 +16,13 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         db = new DatabaseAttendance(this);
+
+        getSupportActionBar().setTitle("Attendance Monitoring with SMS");
     }
 
-    public void add(View view){
-        Intent addUser= new Intent(this, SignUpActivity.class);
-        startActivity(addUser);
+    public void signUp(View view){
+        Intent signup= new Intent(this, SignUpActivity.class);
+        startActivity(signup);
     }
 
 
@@ -29,24 +31,29 @@ public class SignInActivity extends AppCompatActivity {
         EditText username = findViewById(R.id.s_username);
         EditText password = findViewById(R.id.s_pass);
 
-
-        Boolean a = db.emailpass(username.getText().toString(),password.getText().toString());
-
-         if(a==true){
-
-            Toast.makeText(getApplicationContext(),"Successfully Login",Toast.LENGTH_SHORT).show();
-
-            Intent home= new Intent(this, NavMenu.class);
-            Bundle b = new Bundle();
-            b.putString("username",username.getText().toString());
-            home.putExtras(b);
-            startActivity(home);
-
-
-        }else{
-            Toast.makeText(getApplicationContext(),"Wrong Email or Password",Toast.LENGTH_SHORT).show();
+        if (username.getText().toString().isEmpty()||password.getText().toString().isEmpty()){
+            Toast.makeText(getApplicationContext(),"Fill in all fields",Toast.LENGTH_SHORT).show();
         }
+        else{
 
+            Boolean a = db.emailpass(username.getText().toString(),password.getText().toString());
+
+            if(a==true){
+
+                Toast.makeText(getApplicationContext(),"Successfully Login",Toast.LENGTH_SHORT).show();
+                Intent home= new Intent(this, NavMenu.class);
+                home.putExtra("username", username.getText().toString().trim());
+                startActivity(home);
+
+                username.setText(""); password.setText("");
+
+            }else{
+                Toast.makeText(getApplicationContext(),"Wrong Email or Password",Toast.LENGTH_SHORT).show();
+                username.setText(username.getText().toString());
+                password.setText(password.getText().toString());
+            }
+
+        }
 
     }
 

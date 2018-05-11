@@ -39,7 +39,7 @@ public class AddDialog extends AppCompatDialogFragment {
                 });
 
         txtID = view.findViewById(R.id.txtID);
-        txtName = view.findViewById(R.id.txtName);
+        txtName = view.findViewById(R.id.name);
         txtParentName = view.findViewById(R.id.txtParentName);
         txtCellNum = view.findViewById(R.id.txtCellNum);
 
