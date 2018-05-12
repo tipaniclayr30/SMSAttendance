@@ -13,7 +13,7 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
 
 
     public DatabaseAttendance(Context context){
-        super(context,"Attendance2.db",null, 1);
+        super(context,"NewAttendance.db",null, 1);
     }
 
 
@@ -30,17 +30,19 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
         db.insert("USER", null,param);
     }
 
-    public void addClass (String subject, String code, String time,int drop,int numdays){
+    public void addClass (int user ,String subject, String code, String time,int drop,int numdays){
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues param = new ContentValues();
         //Wala pay user
+        param.put("USER", user);
         param.put("SUBJECT", subject);
         param.put("CODE", code);
         param.put("TIME", time);
         param.put("DRP", drop);
         param.put("NUMDAYS", numdays);
         db.insert("COURSE", null,param);
+
     }
 
 
@@ -64,16 +66,17 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
         return res;
     }
 
+
+
     //WALA PA NA SET NA KUNG UNSAY TEACHER MAO TONG MGA KLASEHA ANG MUGAWAS LANG
-    public ArrayList<Class> selectClass(){
+    public ArrayList<Class> selectClass(int user){
         ArrayList<Class> res = new ArrayList<Class>();
         SQLiteDatabase db =getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM COURSE",null);
+        Cursor c = db.rawQuery("SELECT * FROM COURSE WHERE USER = "+user+"",null);
 
         c.moveToFirst();
         while (c.isAfterLast() == false){
 
-            //int id =c.getInt(c.getColumnIndex("ID"));
             String subject = c.getString(c.getColumnIndex("SUBJECT"));
             String code = c.getString(c.getColumnIndex("CODE"));
             String time = c.getString(c.getColumnIndex("TIME"));
@@ -105,7 +108,7 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
     }
     public void updateClass(String subject, String code, String time,int drop,int numdays,int id){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery("UPDATE  USER SET SUBJECT=?, CODE=?, TIME=?,DRP="+ drop+ ", NUMDAYS="+ numdays+ " WHERE CODE="+id+"",  new String[]{subject,code,time});
+        Cursor c = db.rawQuery("UPDATE COURSE SET SUBJECT= '"+ subject+ "', CODE= '"+ code+ "', TIME= '"+ time+ "', DRP= '"+ drop+ "', NUMDAYS= '"+ numdays+ "' WHERE ID="+id+"",  null);
     }
 
     //CHECKING EMAIL
@@ -115,6 +118,24 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
 
         if(c.getCount()>0) return false;
         else return true;
+    }
+    public ArrayList<User> LogInUsers(String user, String pass){
+        ArrayList<User> res = new ArrayList<User>();
+        SQLiteDatabase db =getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM USER WHERE USERNAME=? AND PASSWORD=?", new String[]{user,pass});
+        c.moveToFirst();
+        while (c.isAfterLast() == false){
+
+            int id =c.getInt(c.getColumnIndex("ID"));
+            String name = c.getString(c.getColumnIndex("NAME"));
+            String uname = c.getString(c.getColumnIndex("USERNAME"));
+            String password = c.getString(c.getColumnIndex("PASSWORD"));
+
+            User u = new User(id,name,uname,password);
+            res.add(u);
+            c.moveToNext();
+        }
+        return res;
     }
 
     //CHECKING EMAIL & PASSWORD

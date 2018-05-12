@@ -2,7 +2,6 @@ package com.example.user.softeng;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -20,12 +19,17 @@ public class NavMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Fragment fragment= null;
-    TextView userT;
+    static TextView userT,userId;
     DrawerLayout drawer;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     FloatingActionButton fab;
     Toolbar toolbar;
+
+    static int ui;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -33,9 +37,6 @@ public class NavMenu extends AppCompatActivity
         setContentView(R.layout.activity_nav_menu);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//NOT YET SOLVE mao natong eset ang name sa naglogin ang pangalan sa textview kay user......
-
 
         fab = (FloatingActionButton) findViewById(R.id.addclass);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +58,6 @@ public class NavMenu extends AppCompatActivity
 
 
 
-//        Toast.makeText(getApplicationContext(), "Hmm", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -75,11 +75,20 @@ public class NavMenu extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.nav_menu, menu);
+
         Bundle b = getIntent().getExtras();
         String username = b.getString("username");
+        int id = b.getInt("id");
         Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT).show();
         userT = findViewById(R.id.userText);
+        userId = findViewById(R.id.userId);
         userT.setText(username);
+        userId.setText(id+"");
+
+        ui=id;
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentHomeClass()).commit();
+
         return true;
     }
 
@@ -105,16 +114,22 @@ public class NavMenu extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-           fragment= new FragmentHomeClass();
-        } else if (id == R.id.nav_editclass) {
+            fragment= new FragmentHomeClass();
 
+
+        } else if (id == R.id.nav_report) {
+            fragment =new FragmentReport()
+
+            ;
         } else if (id == R.id.nav_logout) {
 
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+
         return true;
     }
     public void addClassDialog(){
@@ -123,4 +138,6 @@ public class NavMenu extends AppCompatActivity
         addClassDialog.show(getSupportFragmentManager(),"Add Class Dialog");
 
     }
+
+
 }

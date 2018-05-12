@@ -7,9 +7,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class SignInActivity extends AppCompatActivity {
 
     DatabaseAttendance db;
+    ArrayList<User> u ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +43,17 @@ public class SignInActivity extends AppCompatActivity {
 
             if(a==true){
 
+                u = db.LogInUsers(username.getText().toString(),password.getText().toString());
+
+               String name = u.get(0).name;
+               int id = u.get(0).id;
+
+
+
                 Toast.makeText(getApplicationContext(),"Successfully Login",Toast.LENGTH_SHORT).show();
                 Intent home= new Intent(this, NavMenu.class);
-                home.putExtra("username", username.getText().toString().trim());
+                home.putExtra("username", name);
+                home.putExtra("id", id);
                 startActivity(home);
 
                 username.setText(""); password.setText("");

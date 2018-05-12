@@ -58,9 +58,6 @@ public class SignUpActivity extends AppCompatActivity {
                 }else{
                     db.addUser(id,name.getText().toString(), username.getText().toString(),password.getText().toString());
 
-                    Button b = new Button(getApplicationContext());
-                    b.setText(name.getText()+" "+ id);
-                    //l.addView(b);
 
                     Toast.makeText(getApplicationContext(),"SUCCESSFULLY REGISTERED",Toast.LENGTH_SHORT).show();
 

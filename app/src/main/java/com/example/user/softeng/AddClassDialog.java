@@ -10,14 +10,13 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class AddClassDialog  extends AppCompatDialogFragment {
     private EditText editTextName;
     private EditText editTextRoom;
-    private EditText editTextTime,editTextDays;
+    private EditText editTextTime,editTextDays,userId;
     int drop,days;
 
     DatabaseAttendance db;
@@ -53,10 +52,11 @@ public class AddClassDialog  extends AppCompatDialogFragment {
                     }
                 });
 
-        editTextName = view.findViewById(R.id.editTextName);
-        editTextRoom = view.findViewById(R.id.editTextRoom);
+        editTextName = view.findViewById(R.id.editTextRoom);
+        editTextRoom = view.findViewById(R.id.editTextName);
         editTextTime = view.findViewById(R.id.editTextTime);
         editTextDays = view.findViewById(R.id.editTextDays);
+        userId = view.findViewById(R.id.userId);
         dropswitch = view.findViewById(R.id.dropswitch);
         editTextDays.setEnabled(false);
 
@@ -80,13 +80,13 @@ public class AddClassDialog  extends AppCompatDialogFragment {
 
     public void addclass(){
 
-        if(drop==0){
+        if(drop==2){
             days = 0;
         }else{
             days = Integer.parseInt(editTextDays.getText().toString());
         }
 
-        db.addClass(editTextName.getText().toString(),editTextRoom.getText().toString(), editTextTime.getText().toString(),drop,days);
+        db.addClass(NavMenu.ui,editTextName.getText().toString(),editTextRoom.getText().toString(), editTextTime.getText().toString(),drop,days);
 
 
         editTextName.setText("");

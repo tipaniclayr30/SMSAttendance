@@ -3,9 +3,7 @@ package com.example.user.softeng;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,8 +16,8 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -35,14 +33,18 @@ public class FragmentHomeClass extends Fragment {
     ArrayList<Class> c ;
 
     EditText editTextDays;
+    TextView userId;
     private Switch dropswitch ;
     int drop=2,days;
+
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
+
 
         lv = v.findViewById(R.id.classlist);
         clist = new ArrayList<>();
@@ -51,11 +53,19 @@ public class FragmentHomeClass extends Fragment {
 
         clist.clear();
         db = new DatabaseAttendance(getActivity());
-        c = db.selectClass();
+        c = db.selectClass(NavMenu.ui);
 
-        for (int i= 0 ; i< c.size(); i++ ) {
 
-            clist.add(new Model(c.get(i).subject,c.get(i).cde,c.get(i).tme,c.get(i).drop,c.get(i).numdays));
+
+
+        if (c.size()==0){
+        }
+        else{
+            for (int i= 0 ; i< c.size(); i++ ) {
+
+                clist.add(new Model(c.get(i).subject,c.get(i).cde,c.get(i).tme,c.get(i).drop,c.get(i).numdays));
+
+            }
         }
 
         cadapter.notifyDataSetChanged();
@@ -78,16 +88,15 @@ public class FragmentHomeClass extends Fragment {
                             //update
                             ArrayList<Integer> arrCODE = new ArrayList<Integer>();
                             arrCODE = db.selectUpdateclass();
-
                             ArrayList<Integer> arrID = new ArrayList<Integer>();
                             for (int i= 0 ; i< arrCODE.size(); i++ ) {
                                 arrID.add(arrCODE.get(i));
                             }
-                            showDialogUpdateClass(getActivity(),arrID.get(which));
+                            Toast.makeText(getActivity(),arrID.get(position)+"",Toast.LENGTH_SHORT).show();
+                            showDialogUpdateClass(getActivity(),arrID.get(position));
                         }
                     }
                 });
-
                 dialog.show();
                 return true;
             }
@@ -105,14 +114,16 @@ public class FragmentHomeClass extends Fragment {
         dialog.setContentView(R.layout.update_class_dialog);
         dialog.setTitle("Update Class");
 
-        final EditText editTextName = dialog.findViewById(R.id.editTextName);
-        final EditText editTextRoom = dialog.findViewById(R.id.editTextRoom);
+        final EditText editTextName = dialog.findViewById(R.id.editTextRoom);
+        final EditText editTextRoom = dialog.findViewById(R.id.editTextName);
         final EditText editTextTime = dialog.findViewById(R.id.editTextTime);
         editTextDays = dialog.findViewById(R.id.editTextDays);
         dropswitch = dialog.findViewById(R.id.dropswitch);
         editTextDays.setEnabled(false);
         Button btnUpdate = dialog.findViewById(R.id.btnUpdate);
         Button btnCancel = dialog.findViewById(R.id.btnCancel);
+
+
 
 
         dropswitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -131,8 +142,8 @@ public class FragmentHomeClass extends Fragment {
             }
         });
 
-        int width = (int)(activity.getResources().getDisplayMetrics().widthPixels*0.95);
-        int height = (int)(activity.getResources().getDisplayMetrics().widthPixels*0.7);
+        int width = (int)(activity.getResources().getDisplayMetrics().widthPixels*1);
+        int height = (int)(activity.getResources().getDisplayMetrics().widthPixels*1.1);
 
         dialog.getWindow().setLayout(width,height);
         dialog.show();
@@ -141,18 +152,30 @@ public class FragmentHomeClass extends Fragment {
             @Override
             public void onClick(View v) {
              try {
-                 if(drop==0){
+                 if(drop==2){
                      days = 0;
                  }else{
                      days = Integer.parseInt(editTextDays.getText().toString());
                  }
+
                  db.updateClass(editTextName.getText().toString(), editTextRoom.getText().toString(), editTextTime.getText().toString(), drop, days, position);
+                 updateClassList();
                  dialog.dismiss();
                  Toast.makeText(getActivity(),"Update Successful",Toast.LENGTH_SHORT).show();
+
+
              }catch(Exception error){
                  Log.e("Update error",error.getMessage());
              }
-             updateClassList();
+
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Cancel
+                dialog.dismiss();
             }
         });
 
@@ -161,7 +184,7 @@ public class FragmentHomeClass extends Fragment {
     public void updateClassList() {
         clist.clear();
         db = new DatabaseAttendance(getActivity());
-        c = db.selectClass();
+        c = db.selectClass(NavMenu.ui);
 
         for (int i= 0 ; i< c.size(); i++ ) {
 
