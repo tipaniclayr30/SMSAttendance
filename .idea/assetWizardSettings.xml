@@ -18,54 +18,15 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundImage" value="C:\Users\Jenny Rose\Documents\images\ajsdfwhfd.png" />
-                                      <entry key="backgroundLayerName" value="ic_launcher_logo_r" />
-                                      <entry key="foregroundImage" value="C:\Users\Jenny Rose\Documents\images\logo(FInal).png" />
-                                      <entry key="foregroundLayerName" value="ic_launcher_foreground" />
-                                      <entry key="outputName" value="ic_launcher_logo" />
+                                      <entry key="backgroundImage" value="C:\Users\Jenny Rose\Documents\images\logo.png" />
+                                      <entry key="backgroundLayerName" value="ic_launcher_background_logo" />
+                                      <entry key="foregroundLayerName" value="ic_launcher_foreground_logo_o" />
+                                      <entry key="outputName" value="ic_launcher_logo_o" />
                                     </map>
                                   </option>
                                 </PersistentState>
                               </value>
                             </entry>
-                          </map>
-                        </option>
-                      </PersistentState>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </PersistentState>
-          </value>
-        </entry>
-        <entry key="vectorWizard">
-          <value>
-            <PersistentState>
-              <option name="children">
-                <map>
-                  <entry key="vectorAssetStep">
-                    <value>
-                      <PersistentState>
-                        <option name="children">
-                          <map>
-                            <entry key="clipartAsset">
-                              <value>
-                                <PersistentState>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_message_black_24dp.xml" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                        <option name="values">
-                          <map>
-                            <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_message_black_24dp" />
-                            <entry key="sourceFile" value="C:\Users\user" />
                           </map>
                         </option>
                       </PersistentState>
