@@ -55,9 +55,6 @@ public class NavMenu extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
-
     }
 
     @Override

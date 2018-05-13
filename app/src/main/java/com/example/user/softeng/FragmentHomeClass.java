@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ public class FragmentHomeClass extends Fragment {
     private Switch dropswitch ;
     int drop=2,days;
 
-
+    FloatingActionButton fab;
 
     @Nullable
     @Override
@@ -45,6 +46,13 @@ public class FragmentHomeClass extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
+        fab = (FloatingActionButton) v.findViewById(R.id.addclass1);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addClassDialog();
+            }
+        });
 
         lv = v.findViewById(R.id.classlist);
         clist = new ArrayList<>();
@@ -72,6 +80,35 @@ public class FragmentHomeClass extends Fragment {
         if(clist.size()==0) {
             Toast.makeText(getActivity(), "WALA", Toast.LENGTH_SHORT).show();
         }
+
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ArrayList<Integer> arrCODE = new ArrayList<Integer>();
+                arrCODE = db.selectUpdateclass(NavMenu.ui);
+
+                ArrayList<Integer> aID = new ArrayList<Integer>();
+
+                for (int i= 0 ; i< arrCODE.size(); i++ ){
+                    aID.add(arrCODE.get(i));
+
+                }
+
+                FragmentStudents fs = new FragmentStudents ();
+                Bundle args = new Bundle();
+                args.putInt("id",aID.get(position));
+                fs.setArguments(args);
+
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fs).commit();
+
+                Toast.makeText(getActivity(), aID.get(position)+"", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -86,9 +123,11 @@ public class FragmentHomeClass extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (which ==0){
                             //update
-                            ArrayList<Integer> arrCODE = new ArrayList<Integer>();
-                            arrCODE = db.selectUpdateclass();
                             ArrayList<Integer> arrID = new ArrayList<Integer>();
+
+                            ArrayList<Integer> arrCODE = new ArrayList<Integer>();
+                            arrCODE = db.selectUpdateclass(NavMenu.ui);
+
                             for (int i= 0 ; i< arrCODE.size(); i++ ) {
                                 arrID.add(arrCODE.get(i));
                             }
@@ -190,6 +229,13 @@ public class FragmentHomeClass extends Fragment {
 
             clist.add(new Model(c.get(i).subject,c.get(i).cde,c.get(i).tme,c.get(i).drop,c.get(i).numdays));
         }
+
+    }
+
+    public void addClassDialog(){
+
+        AddClassDialog addClassDialog = new AddClassDialog();
+        addClassDialog.show(getFragmentManager(),"Add Class Dialog");
 
     }
 

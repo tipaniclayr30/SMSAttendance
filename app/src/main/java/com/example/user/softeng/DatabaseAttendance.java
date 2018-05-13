@@ -44,6 +44,20 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
         db.insert("COURSE", null,param);
 
     }
+    public void addStudent (int user, int course, int in, String n, String pn, int num){
+
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues param = new ContentValues();
+        //Wala pay user
+        param.put("USER", user);
+        param.put("COURSE", course);
+        param.put("IDNUM", in);
+        param.put("NAME", n);
+        param.put("PARENTNAME", pn);
+        param.put("NUMBER", num);
+        db.insert("", null,param);
+
+    }
 
 
     public ArrayList<User> selectUsers(){
@@ -66,9 +80,29 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
         return res;
     }
 
+    public ArrayList<Class> selectStudent(int user){
+        ArrayList<Class> res = new ArrayList<Class>();
+        SQLiteDatabase db =getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM STUDENTS WHERE USER = "+user+"",null);
+
+        c.moveToFirst();
+        while (c.isAfterLast() == false){
+
+            String subject = c.getString(c.getColumnIndex("SUBJECT"));
+            String code = c.getString(c.getColumnIndex("CODE"));
+            String time = c.getString(c.getColumnIndex("TIME"));
+            int d =c.getInt(c.getColumnIndex("DRP"));
+            int n =c.getInt(c.getColumnIndex("NUMDAYS"));
 
 
-    //WALA PA NA SET NA KUNG UNSAY TEACHER MAO TONG MGA KLASEHA ANG MUGAWAS LANG
+            Class cl = new Class(subject,code,time,d,n);
+            res.add(cl);
+            c.moveToNext();
+        }
+        return res;
+    }
+
+    //WALA PA NA SET NA KUNG UNSAY TEACHER MAO TONG MGA KLASEHA ANG MUGAWAS LANG - OKAY NA!
     public ArrayList<Class> selectClass(int user){
         ArrayList<Class> res = new ArrayList<Class>();
         SQLiteDatabase db =getReadableDatabase();
@@ -91,10 +125,10 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
         return res;
     }
 //WALA PA NA SET NA KUNG UNSAY TEACHER MAO TONG MGA KLASEHA
-    public ArrayList<Integer> selectUpdateclass(){
+    public ArrayList<Integer> selectUpdateclass(int user){
         ArrayList<Integer> res = new ArrayList<Integer>();
         SQLiteDatabase db =getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT ID FROM COURSE",null);
+        Cursor c = db.rawQuery("SELECT * FROM COURSE WHERE USER = "+user+"",null);
 
         c.moveToFirst();
         while (c.isAfterLast() == false){
@@ -161,7 +195,7 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE COURSE (ID INTEGER PRIMARY KEY AUTOINCREMENT, USER INTEGER ,SUBJECT TEXT, CODE TEXT, TIME TEXT, DRP INTEGER, NUMDAYS INTEGER)");
         db.execSQL("CREATE TABLE USER (ID INTEGER, NAME TEXT, USERNAME TEXT, PASSWORD TEXT)");
-        db.execSQL("CREATE TABLE STUDENT (ID INTEGER, USER INTEGER,CLASS INTEGER,IDNUM INTEGER, NAME TEXT, PARENTNAME  TEXT, NUMBER TEXT)");
+        db.execSQL("CREATE TABLE STUDENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, USER INTEGER,COURSE INTEGER,IDNUM INTEGER, NAME TEXT, PARENTNAME  TEXT, NUMBER TEXT)");
         db.execSQL("CREATE TABLE ATTENDANCE ( USER INTEGER, CLASS INTEGER , STUDENT INTEGER , DATE TEXT , REMARK TEXT, STATUS TEXT)");
 
 

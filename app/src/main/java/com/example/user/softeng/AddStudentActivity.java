@@ -3,7 +3,6 @@ package com.example.user.softeng;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 public class AddStudentActivity extends AppCompatActivity {
 
@@ -19,7 +18,7 @@ public class AddStudentActivity extends AppCompatActivity {
 
     public void openDialog(){
 
-        AddDialog addDialog = new AddDialog();
+        AddStudentDialog addDialog = new AddStudentDialog();
         addDialog.show(getSupportFragmentManager(), "add dialog");
     }
 }

@@ -13,7 +13,7 @@ import android.widget.EditText;
  * Created by Jenny Rose on 4/28/18.
  */
 
-public class AddDialog extends AppCompatDialogFragment {
+public class AddStudentDialog extends AppCompatDialogFragment {
 
     private EditText txtName, txtID, txtParentName, txtCellNum;
 
@@ -21,7 +21,7 @@ public class AddDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.layout_dialog, null);
+        View view = inflater.inflate(R.layout.layout_studentdialog, null);
 
         builder.setView(view)
                 .setTitle("Add Class")
