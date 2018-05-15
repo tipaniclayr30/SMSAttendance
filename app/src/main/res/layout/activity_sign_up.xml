@@ -26,7 +26,8 @@
         android:hint="Name"
         android:inputType="textPersonName"
         android:textColor="@android:color/white"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" />
 
     <EditText
         android:id="@+id/r_username"
@@ -37,7 +38,7 @@
         android:inputType="textPersonName"
         android:textAlignment="viewStart"
         android:textColor="@android:color/white"
-        android:textSize="24sp" />
+        android:textSize="24sp"/>
 
     <EditText
         android:id="@+id/r_password"
@@ -47,7 +48,8 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:textColor="@android:color/white"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" />
 
     <Button
         android:id="@+id/btnCreate"
