@@ -65,14 +65,9 @@ public class SignUpActivity extends AppCompatActivity {
 
                     name.setText(""); username.setText(""); password.setText("");
                 }
-
             }
-
         }
-
-
     }
-
     public void signIn(View view){
         Intent signin= new Intent(this, SignInActivity.class);
         startActivity(signin);

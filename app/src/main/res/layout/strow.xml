@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/txtname"
+    android:layout_width="262dp"
+    android:layout_height="80dp"
+    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+    android:checked="true"
+    android:gravity="center_vertical"
+    android:padding="5dp"
+    android:text="Tiffany Marata"
+    android:focusable="false"
+    android:textSize="24sp"
+    tools:layout_editor_absoluteX="11dp"
+    tools:layout_editor_absoluteY="12dp"
+    />
+

@@ -1,5 +1,6 @@
 package com.example.user.softeng;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,7 +19,8 @@ public class AddClassDialog  extends AppCompatDialogFragment {
     private EditText editTextName;
     private EditText editTextRoom;
     private EditText editTextTime,editTextDays,userId;
-    int drop,days;
+    int drop=2;
+    int days;
 
     DatabaseAttendance db;
     ArrayList<Class> c;
@@ -41,7 +44,7 @@ public class AddClassDialog  extends AppCompatDialogFragment {
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        dismiss();
                     }
                 })
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -89,6 +92,12 @@ public class AddClassDialog  extends AppCompatDialogFragment {
         db.addClass(NavMenu.ui,editTextName.getText().toString(),editTextRoom.getText().toString(), editTextTime.getText().toString(),drop,days);
 
 
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentHomeClass()).commit();
+
+
+
+        Toast.makeText(getActivity(), "NEW CLASS ADDED SUCCESSFULLY", Toast.LENGTH_SHORT).show();
+
         editTextName.setText("");
         editTextRoom.setText("");
         editTextTime.setText("");
@@ -96,6 +105,25 @@ public class AddClassDialog  extends AppCompatDialogFragment {
         dropswitch.setChecked(false);
         editTextDays.setText("");
         editTextDays.setEnabled(false);
+
+
+    }
+
+    public void updateClassList() {
+        ArrayList<Model> clist;
+
+        Toast.makeText(getActivity(), "HI", Toast.LENGTH_SHORT).show();
+
+        clist = new ArrayList<>();
+
+        clist.clear();
+        db = new DatabaseAttendance(getActivity());
+        c = db.selectClass(NavMenu.ui);
+
+        for (int i= 0 ; i< c.size(); i++ ) {
+
+            clist.add(new Model(c.get(i).subject,c.get(i).cde,c.get(i).tme,c.get(i).drop,c.get(i).numdays));
+        }
 
     }
 

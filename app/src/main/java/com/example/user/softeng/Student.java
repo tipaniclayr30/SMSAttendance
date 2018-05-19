@@ -1,7 +1,7 @@
 package com.example.user.softeng;
 
 public class Student {
-    public Student(int u, int c, int in, String n,String pn, int num){
+    public Student(int u, int c, int in, String n,String pn, String num){
         user = u;
         course = c;
         idnum= in;
@@ -11,6 +11,6 @@ public class Student {
 
 
     }
-    public int user, course, idnum, number;
-    public String name, pname;
+    public int user, course, idnum;
+    public String name, pname, number;
 }

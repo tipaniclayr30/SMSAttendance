@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
 
 
     public DatabaseAttendance(Context context){
-        super(context,"NewAttendance.db",null, 1);
+        super(context,"NAttendance.db",null, 1);
     }
 
 
@@ -34,7 +35,7 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues param = new ContentValues();
-        //Wala pay user
+
         param.put("USER", user);
         param.put("SUBJECT", subject);
         param.put("CODE", code);
@@ -44,20 +45,38 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
         db.insert("COURSE", null,param);
 
     }
-    public void addStudent (int user, int course, int in, String n, String pn, int num){
+    public void addStudent (int user, int course, int in, String n, String pn, String num){
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues param = new ContentValues();
-        //Wala pay user
+
         param.put("USER", user);
         param.put("COURSE", course);
         param.put("IDNUM", in);
         param.put("NAME", n);
         param.put("PARENTNAME", pn);
         param.put("NUMBER", num);
-        db.insert("", null,param);
+        db.insert("STUDENT", null,param);
 
     }
+
+// USER INTEGER, CLASS INTEGER , STUDENT INTEGER , DATE TEXT , REMARK INTEGER, STATUS TEXT
+    public void addAttendanceRecord (int user, int course, int student, String studentname, String date, int remark, int status){
+
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues param = new ContentValues();
+
+        param.put("USER", user);
+        param.put("COURSE", course);
+        param.put("STUDENTID", student);
+        param.put("STUDENTNAME", studentname);
+        param.put("DATE", date);
+        param.put("REMARK", remark);
+        param.put("STATUS", status);
+        db.insert("ATTENDANCE", null,param);
+
+    }
+
 
 
     public ArrayList<User> selectUsers(){
@@ -80,23 +99,51 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
         return res;
     }
 
-    public ArrayList<Class> selectStudent(int user){
-        ArrayList<Class> res = new ArrayList<Class>();
+    /*public ArrayList<> AttendanceRecord(int id){
+        ArrayList<Student> res = new ArrayList<Student>();
         SQLiteDatabase db =getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM STUDENTS WHERE USER = "+user+"",null);
+        Cursor c = db.rawQuery("SELECT * FROM  STUDENT WHERE COURSE="+id+"",null);
 
         c.moveToFirst();
         while (c.isAfterLast() == false){
 
-            String subject = c.getString(c.getColumnIndex("SUBJECT"));
-            String code = c.getString(c.getColumnIndex("CODE"));
-            String time = c.getString(c.getColumnIndex("TIME"));
-            int d =c.getInt(c.getColumnIndex("DRP"));
-            int n =c.getInt(c.getColumnIndex("NUMDAYS"));
+
+            int u =c.getInt(c.getColumnIndex("USER"));
+            int co  =c.getInt(c.getColumnIndex("COURSE"));
+            int in  =c.getInt(c.getColumnIndex("IDNUM"));
+            String n = c.getString(c.getColumnIndex("NAME"));
+            String pn = c.getString(c.getColumnIndex("PARENTNAME"));
+            String num = c.getString(c.getColumnIndex("NUMBER"));
 
 
-            Class cl = new Class(subject,code,time,d,n);
-            res.add(cl);
+            Student st = new Student( u,  co,  in,  n, pn, num);
+            res.add(st);
+            c.moveToNext();
+        }
+        return res;
+    }*/
+
+
+
+    public ArrayList<Student> selectStudent(int id){
+        ArrayList<Student> res = new ArrayList<Student>();
+        SQLiteDatabase db =getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM  STUDENT WHERE COURSE="+id+"",null);
+
+        c.moveToFirst();
+        while (c.isAfterLast() == false){
+
+
+            int u =c.getInt(c.getColumnIndex("USER"));
+            int co  =c.getInt(c.getColumnIndex("COURSE"));
+            int in  =c.getInt(c.getColumnIndex("IDNUM"));
+            String n = c.getString(c.getColumnIndex("NAME"));
+            String pn = c.getString(c.getColumnIndex("PARENTNAME"));
+            String num = c.getString(c.getColumnIndex("NUMBER"));
+
+
+            Student st = new Student( u,  co,  in,  n, pn, num);
+            res.add(st);
             c.moveToNext();
         }
         return res;
@@ -124,6 +171,48 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
         }
         return res;
     }
+
+    public ArrayList<StudentRetrieve> selectStudentId(int id){
+        ArrayList<StudentRetrieve> res = new ArrayList<StudentRetrieve>();
+        SQLiteDatabase db =getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM STUDENT WHERE COURSE = "+id+"",null);
+
+        c.moveToFirst();
+        while (c.isAfterLast() == false){
+
+            int i =c.getInt(c.getColumnIndex("ID"));
+            String s = c.getString(c.getColumnIndex("NAME"));
+
+            StudentRetrieve sr = new StudentRetrieve(i,s);
+            res.add(sr);
+            c.moveToNext();
+        }
+        return res;
+    }
+
+    public void DeleteClass(int id) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete("COURSE", "ID ="+id ,null);
+
+    }
+
+    public ArrayList<Integer> selectUpdatestudent(int id){
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        SQLiteDatabase db =getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM STUDENT WHERE COURSE = "+id+"",null);
+
+        c.moveToFirst();
+        while (c.isAfterLast() == false){
+
+            int i =c.getInt(c.getColumnIndex("ID"));
+
+            res.add(i);
+            c.moveToNext();
+        }
+        return res;
+    }
+
 //WALA PA NA SET NA KUNG UNSAY TEACHER MAO TONG MGA KLASEHA
     public ArrayList<Integer> selectUpdateclass(int user){
         ArrayList<Integer> res = new ArrayList<Integer>();
@@ -142,7 +231,17 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
     }
     public void updateClass(String subject, String code, String time,int drop,int numdays,int id){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery("UPDATE COURSE SET SUBJECT= '"+ subject+ "', CODE= '"+ code+ "', TIME= '"+ time+ "', DRP= '"+ drop+ "', NUMDAYS= '"+ numdays+ "' WHERE ID="+id+"",  null);
+        String  strSQL = "UPDATE COURSE SET SUBJECT='"+ subject+ "', CODE='"+ code+ "', TIME='"+ time+ "', DRP='"+ drop+ "', NUMDAYS='"+ numdays+ "' WHERE ID="+id+"";
+        db.execSQL(strSQL);
+        db.close();
+    }
+
+    //IDNUM INTEGER, NAME TEXT, PARENTNAME TEXT, NUMBER TEXT
+    public void updateSTUDENT(int id, String name, String pname,String num, int i){
+        SQLiteDatabase db = getReadableDatabase();
+        String  strSQL = "UPDATE STUDENT SET IDNUM='"+ id+ "', NAME='"+ name+ "',PARENTNAME='"+ pname+ "', NUMBER='"+ num+ "' WHERE ID="+i+"";
+        db.execSQL(strSQL);
+        db.close();
     }
 
     //CHECKING EMAIL
@@ -195,8 +294,8 @@ public class DatabaseAttendance extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE COURSE (ID INTEGER PRIMARY KEY AUTOINCREMENT, USER INTEGER ,SUBJECT TEXT, CODE TEXT, TIME TEXT, DRP INTEGER, NUMDAYS INTEGER)");
         db.execSQL("CREATE TABLE USER (ID INTEGER, NAME TEXT, USERNAME TEXT, PASSWORD TEXT)");
-        db.execSQL("CREATE TABLE STUDENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, USER INTEGER,COURSE INTEGER,IDNUM INTEGER, NAME TEXT, PARENTNAME  TEXT, NUMBER TEXT)");
-        db.execSQL("CREATE TABLE ATTENDANCE ( USER INTEGER, CLASS INTEGER , STUDENT INTEGER , DATE TEXT , REMARK TEXT, STATUS TEXT)");
+        db.execSQL("CREATE TABLE STUDENT (ID INTEGER PRIMARY KEY AUTOINCREMENT, USER INTEGER, COURSE INTEGER,IDNUM INTEGER, NAME TEXT, PARENTNAME TEXT, NUMBER TEXT)");
+        db.execSQL("CREATE TABLE ATTENDANCE ( USER INTEGER, COURSE INTEGER , STUDENTID INTEGER , STUDENTNAME TEXT , DATE TEXT , REMARK INTEGER, STATUS INTEGER)");
 
 
     }

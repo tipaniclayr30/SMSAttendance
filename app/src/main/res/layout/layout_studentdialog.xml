@@ -13,7 +13,8 @@
         android:layout_marginTop="27dp"
         android:ems="10"
         android:hint="ID Number"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:digits="0123456789"/>
 
     <EditText
         android:id="@+id/name"
@@ -23,7 +24,8 @@
         android:layout_below="@+id/txtID"
         android:ems="10"
         android:hint="Name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        />
 
     <TextView
         android:id="@+id/textView2"
@@ -45,7 +47,8 @@
         android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Guardian/Parent Name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        />
 
     <EditText
         android:id="@+id/txtCellNum"
@@ -55,5 +58,6 @@
         android:layout_below="@+id/txtParentName"
         android:ems="10"
         android:hint="Contact #"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:digits="0123456789"/>
 </RelativeLayout>

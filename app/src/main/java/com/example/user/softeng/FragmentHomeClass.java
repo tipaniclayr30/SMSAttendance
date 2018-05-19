@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -37,10 +40,14 @@ public class FragmentHomeClass extends Fragment {
     TextView userId;
     private Switch dropswitch ;
     int drop=2,days;
+    static int ci;
 
     FloatingActionButton fab;
+    //ACTION BAR
 
-    @Nullable
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,9 +70,6 @@ public class FragmentHomeClass extends Fragment {
         db = new DatabaseAttendance(getActivity());
         c = db.selectClass(NavMenu.ui);
 
-
-
-
         if (c.size()==0){
         }
         else{
@@ -78,7 +82,7 @@ public class FragmentHomeClass extends Fragment {
 
         cadapter.notifyDataSetChanged();
         if(clist.size()==0) {
-            Toast.makeText(getActivity(), "WALA", Toast.LENGTH_SHORT).show();
+
         }
 
 
@@ -92,7 +96,6 @@ public class FragmentHomeClass extends Fragment {
 
                 for (int i= 0 ; i< arrCODE.size(); i++ ){
                     aID.add(arrCODE.get(i));
-
                 }
 
                 FragmentStudents fs = new FragmentStudents ();
@@ -100,9 +103,12 @@ public class FragmentHomeClass extends Fragment {
                 args.putInt("id",aID.get(position));
                 fs.setArguments(args);
 
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fs).commit();
+                ci =aID.get(position);
 
-                Toast.makeText(getActivity(), aID.get(position)+"", Toast.LENGTH_SHORT).show();
+                Intent in = new Intent(getActivity(),AttendanceSet.class);
+                startActivity(in);
+
+
 
             }
         });
@@ -113,27 +119,42 @@ public class FragmentHomeClass extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                CharSequence[] items = {"Update"};
+                CharSequence[] items = {"Update","Delete"};
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 
-                dialog.setTitle("Update");
+                dialog.setTitle("Choose Item");
                 dialog.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (which ==0){
+                        if (which == 0) {
                             //update
                             ArrayList<Integer> arrID = new ArrayList<Integer>();
 
                             ArrayList<Integer> arrCODE = new ArrayList<Integer>();
                             arrCODE = db.selectUpdateclass(NavMenu.ui);
 
-                            for (int i= 0 ; i< arrCODE.size(); i++ ) {
+                            for (int i = 0; i < arrCODE.size(); i++) {
                                 arrID.add(arrCODE.get(i));
                             }
-                            Toast.makeText(getActivity(),arrID.get(position)+"",Toast.LENGTH_SHORT).show();
-                            showDialogUpdateClass(getActivity(),arrID.get(position));
+                            Toast.makeText(getActivity(), arrID.get(position) + "", Toast.LENGTH_SHORT).show();
+                            showDialogUpdateClass(getActivity(), arrID.get(position));
+                        } if(which == 1) {
+                            //Delete
+                            ArrayList<Integer> arrID = new ArrayList<Integer>();
+
+                            ArrayList<Integer> arrCODE = new ArrayList<Integer>();
+                            arrCODE = db.selectUpdateclass(NavMenu.ui);
+
+                            for (int i = 0; i < arrCODE.size(); i++) {
+                                arrID.add(arrCODE.get(i));
+                            }
+
+                            db.DeleteClass(arrCODE.get(position));
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FragmentHomeClass()).commit();
+                            Toast.makeText(getActivity(),"CLASS WAS SUCCESSFULLY DELETED",Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 });
                 dialog.show();
@@ -197,9 +218,12 @@ public class FragmentHomeClass extends Fragment {
                      days = Integer.parseInt(editTextDays.getText().toString());
                  }
 
-                 db.updateClass(editTextName.getText().toString(), editTextRoom.getText().toString(), editTextTime.getText().toString(), drop, days, position);
-                 updateClassList();
+                 //Toast.makeText(getActivity(),editTextName.getText().toString()+""+ editTextRoom.getText().toString()+""+ editTextTime.getText().toString()+""+position,Toast.LENGTH_LONG).show();
+
+                db.updateClass(editTextName.getText().toString(), editTextRoom.getText().toString(), editTextTime.getText().toString(), drop, days, position);
+
                  dialog.dismiss();
+                 updateClassList();
                  Toast.makeText(getActivity(),"Update Successful",Toast.LENGTH_SHORT).show();
 
 

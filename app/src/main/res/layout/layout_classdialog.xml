@@ -21,7 +21,8 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.536" />
+        app:layout_constraintVertical_bias="0.536"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"/>
 
     <EditText
         android:id="@+id/editTextName"
@@ -37,7 +38,8 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.345" />
+        app:layout_constraintVertical_bias="0.345"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"/>
 
     <Switch
         android:id="@+id/dropswitch"
@@ -60,7 +62,8 @@
         android:layout_below="@+id/editTextRoom"
         android:ems="10"
         android:hint="Time"
-        android:inputType="time" />
+        android:inputType="time"
+        />
 
     <EditText
         android:id="@+id/editTextDays"
@@ -70,6 +73,7 @@
         android:layout_below="@+id/dropswitch"
         android:ems="10"
         android:hint="Number of days"
-        android:inputType="number" />
+        android:inputType="number"
+        android:digits="0123456789"/>
 
 </RelativeLayout>

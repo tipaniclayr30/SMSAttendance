@@ -55,6 +55,8 @@ public class NavMenu extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+
     }
 
     @Override
@@ -68,6 +70,8 @@ public class NavMenu extends AppCompatActivity
         }
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -76,7 +80,7 @@ public class NavMenu extends AppCompatActivity
         Bundle b = getIntent().getExtras();
         String username = b.getString("username");
         int id = b.getInt("id");
-        Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT).show();
+
         userT = findViewById(R.id.userText);
         userId = findViewById(R.id.userId);
         userT.setText(username);
@@ -97,9 +101,7 @@ public class NavMenu extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }

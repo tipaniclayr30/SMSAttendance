@@ -8,8 +8,19 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="410dp"
+        android:visibility="invisible"
+        app:backgroundTint="@android:color/holo_green_dark"
+        app:srcCompat="@drawable/ic_save_black_24dp" />
+
     <ListView
-        android:id="@+id/lv_student"
+        android:id="@+id/studentlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -19,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:backgroundTint="@android:color/holo_green_dark"
-        app:srcCompat="@drawable/ic_addclass" />
+        app:srcCompat="@drawable/ic_person_add_black_24dp" />
 </FrameLayout>

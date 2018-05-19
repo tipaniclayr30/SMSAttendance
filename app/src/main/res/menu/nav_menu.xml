@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="Help"
-        app:showAsAction="never" />
+        android:id="@+id/saveattendance"
+        android:icon="@drawable/ic_save_black_24dp"
+        android:title="Item"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_class"
-        android:orderInCategory="100"
-        android:title="Delete Class"
-        app:showAsAction="never" />
+        android:id="@+id/help"
+        android:title="Help" />
 </menu>
