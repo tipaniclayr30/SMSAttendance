@@ -26,6 +26,9 @@ public class NavMenu extends AppCompatActivity
     ActionBarDrawerToggle toggle;
     FloatingActionButton fab;
     Toolbar toolbar;
+
+    static int ui;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -77,9 +80,14 @@ public class NavMenu extends AppCompatActivity
         getMenuInflater().inflate(R.menu.nav_menu, menu);
         Bundle b = getIntent().getExtras();
         String username = b.getString("username");
+        int id = b.getInt("id");
         Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT).show();
         userT = findViewById(R.id.userText);
         userT.setText(username);
+
+        ui = id;
+
+
         return true;
     }
 
@@ -91,9 +99,9 @@ public class NavMenu extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+     /*   if (id == R.id.) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
